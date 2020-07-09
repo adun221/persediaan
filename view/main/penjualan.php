@@ -193,7 +193,7 @@ if (isset($_GET['del'])=='') {
                                               <span>Jumlah Barang</span>
                                           </div>
                                           <div class="col-md-8">
-                                              <input type="number" min="0" max="9" class="form-control" id="jumlah_keluar" name="jumlah_keluar" placeholder="Jumlah Barang" />
+                                              <input type="number" min="0"  class="form-control" id="jumlah_keluar" name="jumlah_keluar" placeholder="Jumlah Barang" />
                                           </div>
                                       </div>
                                       <div class="form-group row">
@@ -290,6 +290,8 @@ if (isset($_GET['del'])=='') {
                         }
                         // $('#eselmasuk').val(rs.nama_barang);
                         $('#id_masuk').val(rs.id_masuk);
+                        $('#jumlah_keluar').attr('max', rs.stok);
+                        $('#jumlah_keluar').attr('placeholder', 'Maksimal '+rs.stok+' Barang');
                         $('#eselmasuk').select2("trigger", "select", {
                             data: {
                                 id: rs.id_masuk,
