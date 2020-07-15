@@ -5,7 +5,7 @@ session_start();
 
 $queri = mysqli_query($koneksi,"SELECT a.id_masuk,a.nama_barang, a.jumlah_masuk, COALESCE(b.jumlah_keluar,0) AS jumlah_keluar, (a.jumlah_masuk-COALESCE(b.jumlah_keluar,0)) AS stok FROM 
                                           (SELECT id_masuk, nama_barang,SUM(jumlah_masuk) AS jumlah_masuk FROM barang_masuk GROUP BY nama_barang) a 
-                                          LEFT JOIN (SELECT id_masuk, SUM(jumlah_keluar) AS jumlah_keluar FROM barang_keluar GROUP BY id_masuk) b ON a.id_masuk=b.id_masuk WHERE (a.jumlah_masuk-COALESCE(b.jumlah_keluar,0))!='0' ORDER BY a.nama_barang ASC"); // query menambahkan data ke tabel 
+                                          LEFT JOIN (SELECT id_masuk, SUM(jumlah_keluar) AS jumlah_keluar FROM barang_keluar GROUP BY id_masuk) b ON a.id_masuk=b.id_masuk ORDER BY a.nama_barang ASC"); // query menambahkan data ke tabel 
 
 while ($rs = mysqli_fetch_array($queri)) {
 	$query = mysqli_num_rows(mysqli_query($koneksi,"SELECT * from barang_tersedia where id_masuk='".$rs['id_masuk']."'"));
