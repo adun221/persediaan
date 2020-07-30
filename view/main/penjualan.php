@@ -44,10 +44,10 @@ if (isset($_GET['del'])=='') {
                 <div class="card-body">
                   <ul class="nav nav-pills" id="tab">
                         <li class="nav-item">
-                            <a class="nav-link active" id="update-tab" data-toggle="pill" href="#update" aria-expanded="false">Update</a>
+                            <a class="nav-link active" id="update-tab" data-toggle="pill" href="#update" aria-expanded="false">Tambah Penjualan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="data-tab" data-toggle="pill" href="#data" aria-expanded="true">Data</a>
+                            <a class="nav-link" id="data-tab" data-toggle="pill" href="#data" aria-expanded="true">Tampilkan Penjualan</a>
                         </li>
                   </ul>
                   <div class="tab-content">
@@ -97,7 +97,7 @@ if (isset($_GET['del'])=='') {
                                                   <div class="col-md-4">
                                                   </div>
                                                   <div class="col-md-8">
-                                                    <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
+                                                    <button type="submit" class="btn btn-primary mr-1 mb-1">Simpan</button>
                                                   </div>
                                               </div>
                                             </div>
@@ -210,7 +210,7 @@ if (isset($_GET['del'])=='') {
                                         <div class="col-md-4">
                                         </div>
                                         <div class="col-md-8">
-                                          <button type="submit" class="btn btn-primary mr-1 mb-1">Submit</button>
+                                          <button type="submit" class="btn btn-primary mr-1 mb-1">Simpan</button>
                                           <button type="button" class="btn btn-danger mr-1 mb-1" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>

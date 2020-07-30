@@ -55,8 +55,8 @@
                     <tr>
                       <th style="width: 50px;">No</th>
                       <th>Nama Barang</th>
-                      <th>Jumlah Barang Masuk</th>
-                      <th>Jumlah Barang Keluar</th>
+                      <!-- <th>Jumlah Barang Masuk</th> -->
+                      <!-- <th>Jumlah Barang Keluar</th> -->
                       <th>Stok</th>
                     </tr>
                   </thead>
@@ -70,8 +70,8 @@
                         <tr>
                           <td><?=$n;?></td>
                           <td><?=$rs['nama_barang'];?></td>
-                          <td><?=$rs['jumlah_masuk'];?></td>
-                          <td><?=$rs['jumlah_keluar'];?></td>
+                          <!-- <td><?=$rs['jumlah_masuk'];?></td> -->
+                          <!-- <td><?=$rs['jumlah_keluar'];?></td> -->
                           <td><?=$rs['stok'];?></td>
                         </tr>
                        <?php }
