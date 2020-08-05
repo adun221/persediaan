@@ -10,7 +10,7 @@
 
             <!-- Nav Item - Alerts -->
             <?php
-              $query =  mysqli_query($koneksi,"SELECT b.nama_barang,a.jumlah_tersedia as stok FROM barang_tersedia a JOIN barang_masuk b ON a.id_masuk=b.id_masuk WHERE jumlah_tersedia<='10' ORDER BY a.jumlah_tersedia ASC");
+              $query =  mysqli_query($koneksi,"SELECT b.nama_barang,a.jumlah_tersedia as stok FROM barang_tersedia a JOIN nama_barang b ON a.kd_barang=b.id WHERE jumlah_tersedia<='10' ORDER BY a.jumlah_tersedia ASC");
 
               if ($_SESSION['jabatan']=='1' || $_SESSION['jabatan']=='0') {
                 

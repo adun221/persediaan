@@ -64,22 +64,22 @@ if (isset($_GET['del'])=='') {
                                                     </div>
                                                     <div class="col-md-8">
                                                       <div class="sel">
-                                                        <select class="form-control" id="selnabar" name="nama_barang">
+                                                        <select class="form-control" id="selnabar" name="kd_barang">
                                                           <option value=""></option>
                                                           <?php  
-                                                            $nabar = mysqli_query($koneksi,"SELECT id_masuk,nama_barang from barang_masuk group by nama_barang order by nama_barang ASC ");
+                                                            $nabar = mysqli_query($koneksi,"SELECT id,nama_barang from nama_barang ");
                                                             while ($rsnabar = mysqli_fetch_array($nabar)) { ?>
-                                                          <option value="<?=$rsnabar['nama_barang'];?>"><?=$rsnabar['nama_barang'];?></option>
+                                                          <option value="<?=$rsnabar['id'];?>"><?=$rsnabar['nama_barang'];?></option>
                                                            <?php } ?>
                                                         </select>
                                                       </div>
-                                                      <div class="nonsel">
+                                                      <!-- <div class="nonsel">
                                                         <input type="text" class="form-control" name="nama_barang" id="nonabar" placeholder="Nama Barang" disabled>
                                                       </div>
                                                       <div class="custom-control custom-checkbox small">
                                                         <input type="checkbox" class="custom-control-input" value="1" id="tidakada">
                                                         <label class="custom-control-label" for="tidakada" style="line-height: 1.5rem; margin-top: 6px;">Tidak Ada Di List</label>
-                                                      </div>
+                                                      </div> -->
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -121,6 +121,7 @@ if (isset($_GET['del'])=='') {
                               <thead>
                                 <tr>
                                   <th style="width: 50px;">No</th>
+                                  <th>Kode Barang</th>
                                   <th>Nama Barang</th>
                                   <th>Jumlah Barang</th>
                                   <th>Tanggal Masuk</th>
@@ -130,13 +131,14 @@ if (isset($_GET['del'])=='') {
                               <tbody>
                                 <?php
                                   $n = "0";
-                                   $query = mysqli_query($koneksi,"SELECT * from barang_masuk order by tanggal_masuk DESC ");
+                                   $query = mysqli_query($koneksi,"SELECT a.*,b.kd_barang as kodbar,b.nama_barang FROM barang_masuk a JOIN nama_barang b ON a.kd_barang=b.id ORDER BY tanggal_masuk DESC ");
                                    while ($rs = mysqli_fetch_array($query)) { $n++; ?>
                                     <tr>
                                       <td><?=$n;?></td>
+                                      <td><?=$rs['kodbar'];?></td>
                                       <td><?=$rs['nama_barang'];?></td>
                                       <td><?=$rs['jumlah_masuk'];?></td>
-                                      <td><?=$rs['tanggal_masuk'];?></td>
+                                      <td><?=date("d-m-Y", strtotime($rs['tanggal_masuk']));?></td>
                                       <td><a class="btn btn-icon btn-outline-primary" title="Edit" data-value="<?=$rs['id_masuk'];?>"><i class="far fa-edit"></i></a> <a href="<?=$urlcontroller?>/pembelian/hapus.php?id=<?=$rs['id_masuk'];?>"  onclick="return confirm('Yakin Akan Menghapus ?')"  class="btn btn-icon btn-outline-primary"><i class="fas fa-trash"></i></a></td>
                                     </tr>
                                    <?php }
@@ -176,22 +178,22 @@ if (isset($_GET['del'])=='') {
                                               <input type="hidden" id="id_masuk" name="id_masuk" />
                                               <!-- <input type="text" class="form-control" id="nama_barang" name="nama_barang" value="" placeholder="Nama Barang" /> -->
                                               <div class="sel">
-                                                <select class="form-control" id="eselnabar" name="nama_barang">
+                                                <select class="form-control" id="eselnabar" name="kd_barang">
                                                   <option value=""></option>
                                                   <?php  
-                                                    $nabar = mysqli_query($koneksi,"SELECT id_masuk,nama_barang from barang_masuk group by nama_barang order by nama_barang ASC ");
+                                                    $nabar = mysqli_query($koneksi,"SELECT id,nama_barang from nama_barang group by nama_barang order by nama_barang ASC ");
                                                     while ($rsnabar = mysqli_fetch_array($nabar)) { ?>
-                                                  <option value="<?=$rsnabar['nama_barang'];?>"><?=$rsnabar['nama_barang'];?></option>
+                                                  <option value="<?=$rsnabar['id'];?>"><?=$rsnabar['nama_barang'];?></option>
                                                    <?php } ?>
                                                 </select>
                                               </div>
-                                              <div class="nonsel">
+                                              <!-- <div class="nonsel">
                                                 <input type="text" class="form-control" name="nama_barang" id="enonabar" placeholder="Nama Barang" disabled>
                                               </div>
                                               <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" value="1" id="nothing">
                                                 <label class="custom-control-label" for="nothing" style="line-height: 1.5rem; margin-top: 6px;">Tidak Ada Di List</label>
-                                              </div>
+                                              </div> -->
                                           </div>
                                       </div>
                                       <div class="form-group row">
@@ -276,7 +278,7 @@ if (isset($_GET['del'])=='') {
                         }
                         $('#eselnabar').select2("trigger", "select", {
                             data: {
-                                id: rs.nama_barang,
+                                id: rs.kd_barang,
                                 name: rs.nama_barang
                             }
                         });

@@ -2,7 +2,7 @@
 session_start();
  include '../konek.php'; // untuk mengambil koneksi ke db
 
-		$queri = mysqli_query($koneksi,"INSERT INTO barang_keluar VALUES ('','".$_POST['id_masuk']."','".$_POST['jumlah_keluar']."','".$_POST['tanggal_keluar']."','".$_SESSION['id']."')"); // query menambahkan data ke tabel 
+		$queri = mysqli_query($koneksi,"INSERT INTO barang_keluar VALUES ('','".$_POST['kd_barang']."','".$_POST['jumlah_keluar']."','".$_POST['tanggal_keluar']."','".$_SESSION['id']."')"); // query menambahkan data ke tabel 
 
 		if ($queri) {
 

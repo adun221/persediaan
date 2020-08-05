@@ -37,13 +37,34 @@
       </li>
 
       <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+      <!-- <hr class="sidebar-divider d-none d-md-block"> -->
+      <?php } ?>
+      
+      <?php if($_SESSION['jabatan']=='2' || $_SESSION['jabatan']=='0'){ ?>
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item <?php if($_GET['h']=='nama_barang'){ echo "active";}?>">
+        <a class="nav-link" href="http://localhost/persediaan/view/main/index.php?h=nama_barang">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Nama Barang</span>
+        </a>
+      </li>
       <?php } ?>
 
       <!-- Heading -->
       <div class="sidebar-heading">
         Pendataan
       </div>
+
+
+      <?php if($_SESSION['jabatan']=='2' || $_SESSION['jabatan']=='0'){ ?>
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item <?php if($_GET['h']=='pembelian'){ echo "active";}?>">
+        <a class="nav-link" href="http://localhost/persediaan/view/main/index.php?h=pembelian">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>Barang Masuk</span>
+        </a>
+      </li>
+      <?php } ?>
 
       <?php if($_SESSION['jabatan']=='3' || $_SESSION['jabatan']=='0'){ ?>
       <!-- Nav Item - Pages Collapse Menu -->
@@ -54,15 +75,7 @@
         </a>
       </li>
       <?php } ?>
-      <?php if($_SESSION['jabatan']=='2' || $_SESSION['jabatan']=='0'){ ?>
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item <?php if($_GET['h']=='pembelian'){ echo "active";}?>">
-        <a class="nav-link" href="http://localhost/persediaan/view/main/index.php?h=pembelian">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Barang Masuk</span>
-        </a>
-      </li>
-      <?php } ?>
+
 
 
       <?php if($_SESSION['jabatan']=='1' || $_SESSION['jabatan']=='3' || $_SESSION['jabatan']=='0'){ ?>

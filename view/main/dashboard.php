@@ -28,7 +28,7 @@
             </div>
 <?php } ?>
                         <?php $stok  = mysqli_fetch_array(mysqli_query($koneksi,"SELECT SUM(a.jumlah_masuk) AS masuk, SUM(b.jumlah_keluar) AS keluar, (SUM(a.jumlah_masuk)-SUM(b.jumlah_keluar)) AS stok 
-                    FROM (SELECT id_masuk, nama_barang,SUM(jumlah_masuk) AS jumlah_masuk FROM barang_masuk GROUP BY nama_barang) a LEFT JOIN (SELECT id_masuk, SUM(jumlah_keluar) AS jumlah_keluar FROM barang_keluar GROUP BY id_masuk) b ON a.id_masuk=b.id_masuk ORDER BY a.nama_barang ASC")) ?>
+  FROM (SELECT kd_barang,SUM(jumlah_masuk) AS jumlah_masuk FROM barang_masuk GROUP BY kd_barang) a LEFT JOIN (SELECT kd_barang, SUM(jumlah_keluar) AS jumlah_keluar FROM barang_keluar GROUP BY kd_barang) b ON a.kd_barang=b.kd_barang ORDER BY a.kd_barang ASC")) ?>
 <?php if($_SESSION['jabatan']=='1' || $_SESSION['jabatan']=='0' || $_SESSION['jabatan']=='2'){ ?>
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
@@ -123,7 +123,7 @@
 <?php
 $data = array();
 $label = array();
-$nabar = mysqli_query($koneksi,"SELECT a.id,a.bulan,IFNULL(b.terjual,0) AS terjual FROM bulan a LEFT JOIN (SELECT IFNULL(SUM(jumlah_keluar),0) AS terjual, tanggal_keluar  FROM barang_keluar a JOIN barang_masuk b ON a.id_masuk=b.id_masuk GROUP BY MONTH(tanggal_keluar)) b ON a.id=MONTH(b.tanggal_keluar) ORDER BY a.id ASC limit ".date('m')."");
+$nabar = mysqli_query($koneksi,"SELECT a.id,a.bulan,IFNULL(b.terjual,0) AS terjual FROM bulan a LEFT JOIN (SELECT IFNULL(SUM(jumlah_keluar),0) AS terjual, tanggal_keluar  FROM barang_keluar a JOIN barang_masuk b ON a.kd_barang=b.kd_barang GROUP BY MONTH(tanggal_keluar)) b ON a.id=MONTH(b.tanggal_keluar) ORDER BY a.id ASC limit ".date('m')."");
 while ($rsnabar = mysqli_fetch_array($nabar)) { 
  $n['data'] = $rsnabar['terjual'];
  $n['label'] = $rsnabar['bulan'];

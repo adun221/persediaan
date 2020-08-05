@@ -3,7 +3,7 @@
 
 		$id = $_POST['id'];
 
-		$query = mysqli_query($koneksi,"SELECT a.*,b.nama_barang,(c.jumlah_tersedia+a.jumlah_keluar) AS stok FROM barang_keluar a JOIN barang_masuk b ON a.id_masuk=b.id_masuk JOIN barang_tersedia c ON a.id_masuk=c.id_masuk where a.id_keluar='".$id."'");
+		$query = mysqli_query($koneksi,"SELECT id_keluar,b.id AS kodbar, nama_barang, jumlah_keluar,tanggal_keluar,c.nama,d.jumlah_tersedia+a.jumlah_keluar AS stok FROM barang_keluar a JOIN nama_barang b ON a.kd_barang=b.id JOIN pengguna c ON a.id_pengguna=c.id_pengguna JOIN barang_tersedia d ON b.id=d.kd_barang where a.id_keluar='".$id."'");
 		$rs = mysqli_fetch_array($query);
 
 		echo json_encode($rs);

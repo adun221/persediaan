@@ -63,14 +63,12 @@ if (isset($_GET['del'])=='') {
                                                         <span>Nama Barang</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <select class="form-control" id="selmasuk" name="id_masuk" required>
+                                                        <select class="form-control" id="selmasuk" name="kd_barang" required>
                                                           <option value=""></option>
                                                           <?php  
-                                                            $nabar = mysqli_query($koneksi,"SELECT a.id_masuk,a.nama_barang, a.jumlah_masuk, COALESCE(b.jumlah_keluar,0) AS jumlah_keluar, (a.jumlah_masuk-COALESCE(b.jumlah_keluar,0)) AS stok FROM 
-                                          (SELECT id_masuk, nama_barang,SUM(jumlah_masuk) AS jumlah_masuk FROM barang_masuk GROUP BY nama_barang) a 
-                                          LEFT JOIN (SELECT id_masuk, SUM(jumlah_keluar) AS jumlah_keluar FROM barang_keluar GROUP BY id_masuk) b ON a.id_masuk=b.id_masuk WHERE (a.jumlah_masuk-COALESCE(b.jumlah_keluar,0))!='0' ORDER BY a.nama_barang ASC");
+                                                            $nabar = mysqli_query($koneksi,"SELECT * from nama_barang order by nama_barang asc");
                                                             while ($rsnabar = mysqli_fetch_array($nabar)) { ?>
-                                                          <option data-value="<?=$rsnabar['id_masuk'];?>" value="<?=$rsnabar['id_masuk'];?>"><?=$rsnabar['nama_barang'];?></option>
+                                                          <option data-value="<?=$rsnabar['id'];?>" value="<?=$rsnabar['id'];?>"><?=$rsnabar['nama_barang'];?></option>
                                                            <?php } ?>
                                                         </select>
                                                     </div>
@@ -80,7 +78,7 @@ if (isset($_GET['del'])=='') {
                                                         <span>Jumlah Barang</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="number" min="0" class="form-control" id="jkeluar" name="jumlah_keluar" placeholder="Jumlah Barang" required />
+                                                        <input type="number" min="0" oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);" class="form-control" id="jkeluar" name="jumlah_keluar" placeholder="Jumlah Barang" required />
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -114,6 +112,7 @@ if (isset($_GET['del'])=='') {
                               <thead>
                                 <tr>
                                   <th style="width: 50px;">No</th>
+                                  <th>Kode Barang</th>
                                   <th>Nama Barang</th>
                                   <th>Jumlah Barang</th>
                                   <th>Tanggal Masuk</th>
@@ -128,13 +127,15 @@ if (isset($_GET['del'])=='') {
                                     $n = "0";
                                     $where = "";
                                     if($_SESSION['jabatan']=='3') $where = " where a.id_pengguna='".$_SESSION['id']."'";
-                                     $query = mysqli_query($koneksi,"SELECT a.*,b.nama_barang,c.nama FROM barang_keluar a JOIN barang_masuk b ON a.id_masuk=b.id_masuk JOIN pengguna c ON a.id_pengguna=c.id_pengguna $where ORDER BY a.tanggal_keluar DESC ");
+                                     // $query = mysqli_query($koneksi,"SELECT a.*,b.nama_barang,c.nama FROM barang_keluar a JOIN barang_masuk b ON a.id_masuk=b.id_masuk JOIN pengguna c ON a.id_pengguna=c.id_pengguna $where ORDER BY a.tanggal_keluar DESC ");
+                                     $query = mysqli_query($koneksi,"SELECT id_keluar, nama_barang, jumlah_keluar, DATE_FORMAT(tanggal_keluar, '%d-%m-%Y') AS tanggal,c.nama,b.kd_barang FROM barang_keluar a JOIN nama_barang b ON a.kd_barang=b.id JOIN pengguna c ON a.id_pengguna=c.id_pengguna $where ORDER BY a.tanggal_keluar DESC ");
                                      while ($rs = mysqli_fetch_array($query)) { $n++; ?>
                                       <tr>
                                         <td><?=$n;?></td>
+                                        <td><?=$rs['kd_barang'];?></td>
                                         <td><?=$rs['nama_barang'];?></td>
                                         <td><?=$rs['jumlah_keluar'];?></td>
-                                        <td><?=$rs['tanggal_keluar'];?></td>
+                                        <td><?=$rs['tanggal'];?></td>
                                         <?php if($_SESSION['jabatan']=='1' || $_SESSION['jabatan']=='0'){ ?>
                                         <td><?=$rs['nama'];?></td>
                                         <?php } ?>
@@ -175,14 +176,13 @@ if (isset($_GET['del'])=='') {
                                           </div>
                                           <div class="col-md-8">
                                               <input type="hidden" id="id_keluar" name="id_keluar" />
-                                              <input type="hidden" id="id_masuk" name="id_masuk" />
                                               <!-- <input type="text" class="form-control" id="id_masuk" name="id_masuk" value="" placeholder="Nama Barang" /> -->
-                                              <select class="form-control" id="eselmasuk" name="id_masuk" readonly>
+                                              <select class="form-control" id="eselmasuk"  readonly disabled>
                                                 <option value=""></option>
                                                 <?php  
-                                                  $nabar = mysqli_query($koneksi,"SELECT id_masuk,nama_barang from barang_masuk group by nama_barang order by nama_barang ASC ");
+                                                  $nabar = mysqli_query($koneksi,"SELECT id,nama_barang from nama_barang order by nama_barang ASC ");
                                                   while ($rsnabar = mysqli_fetch_array($nabar)) { ?>
-                                                <option value="<?=$rsnabar['id_masuk'];?>"><?=$rsnabar['nama_barang'];?></option>
+                                                <option value="<?=$rsnabar['id'];?>"><?=$rsnabar['nama_barang'];?></option>
                                                  <?php } ?>
                                               </select>
                                               <!-- <input type="text" class="form-control" id="eselmasuk"  readonly> -->
@@ -241,6 +241,8 @@ if (isset($_GET['del'])=='') {
     }
 
     $(document).ready(function(){ 
+
+
         $('#selmasuk').select2({
             placeholder: "Pilih Nama Barang"
         });
@@ -261,8 +263,8 @@ if (isset($_GET['del'])=='') {
                 success : function (rs) {
                     if(!rs.null){
                         $("#jkeluar").val('');
-                        $("#jkeluar").attr('placeholder','Maksimal '+rs.stok+' Barang');
-                        $("#jkeluar").attr('max', rs.stok);
+                        $("#jkeluar").attr('placeholder','Maksimal '+rs.jumlah_tersedia+' Barang');
+                        $("#jkeluar").attr('max', rs.jumlah_tersedia);
                     } else {
                        alert('Data Tidak ditemukan');  // jika terjadi masalah
                     }
@@ -294,7 +296,7 @@ if (isset($_GET['del'])=='') {
                         $('#jumlah_keluar').attr('placeholder', 'Maksimal '+rs.stok+' Barang');
                         $('#eselmasuk').select2("trigger", "select", {
                             data: {
-                                id: rs.id_masuk,
+                                id: rs.kodbar,
                                 name: rs.nama_barang
                             }
                         });
@@ -305,6 +307,21 @@ if (isset($_GET['del'])=='') {
                 }
             })
         });
+
     });
+
+    function InvalidMsg(textbox) {
+    
+    if (textbox.value == '') {
+        textbox.setCustomValidity('Tolong Diisi Terlebih Dahulu');
+    }
+    else if(textbox.validity.rangeOverflow){
+        textbox.setCustomValidity('Maaf Stok Tidak Mencukupi');
+    }
+    else {
+        textbox.setCustomValidity('');
+    }
+    return true;
+}
 
 </script>

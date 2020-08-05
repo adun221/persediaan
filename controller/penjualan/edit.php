@@ -2,7 +2,7 @@
 session_start();
  include '../konek.php'; // untuk mengambil koneksi ke db
  
-		$queri = mysqli_query($koneksi,"UPDATE barang_keluar set id_masuk='".$_POST['id_masuk']."' , jumlah_keluar='".$_POST['jumlah_keluar']."', tanggal_keluar='".$_POST['tanggal_keluar']."' where id_keluar='".$_POST['id_keluar']."' "); // query edit data ke tabel 
+		$queri = mysqli_query($koneksi,"UPDATE barang_keluar set jumlah_keluar='".$_POST['jumlah_keluar']."', tanggal_keluar='".$_POST['tanggal_keluar']."' where id_keluar='".$_POST['id_keluar']."' "); // query edit data ke tabel 
 
 			// echo mysqli_error($koneksi);
 		if ($queri) {
