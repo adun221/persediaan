@@ -1,4 +1,5 @@
 <?php 
+
   if (isset($_SESSION['status']) == "login") {
   }else{
     header("Location: http://localhost/persediaan");
@@ -193,7 +194,7 @@ if (isset($_GET['del'])=='') {
                                               <span>Jumlah Barang</span>
                                           </div>
                                           <div class="col-md-8">
-                                              <input type="number" min="0"  class="form-control" id="jumlah_keluar" name="jumlah_keluar" placeholder="Jumlah Barang" />
+                                              <input type="number" min="0" oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);" class="form-control" id="jumlah_keluar" name="jumlah_keluar" placeholder="Jumlah Barang" required />
                                           </div>
                                       </div>
                                       <div class="form-group row">

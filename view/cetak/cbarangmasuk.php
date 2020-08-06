@@ -11,6 +11,7 @@
   -moz-box-sizing: border-box;
 }
 
+
 .page {
   width: 21cm;
   min-height: 29.7cm;
@@ -49,7 +50,7 @@
 </style>
 
 <?php 
-
+setlocale(LC_ALL, 'id-ID', 'id_ID');
 include '../../controller/konek.php';
   if ($_POST['bulan']=='1') {
   $bulan = "Januari";
@@ -76,7 +77,7 @@ include '../../controller/konek.php';
   }elseif ($_POST['bulan']=='12') {
     $bulan = "Desember";
   }
-$query = mysqli_query($koneksi, "select a.*,b.nama from barang_masuk a join pengguna b on a.id_pengguna=b.id_pengguna where month(a.tanggal_masuk)='".$_POST['bulan']."' and year(a.tanggal_masuk)='".$_POST['tahun']."' order by a.tanggal_masuk ASC");
+$query = mysqli_query($koneksi, "SELECT c.kd_barang,c.nama_barang,a.jumlah_masuk,a.`tanggal_masuk`,b.nama FROM barang_masuk a JOIN pengguna b ON a.id_pengguna=b.id_pengguna JOIN nama_barang c ON a.kd_barang=c.id where month(a.tanggal_masuk)='".$_POST['bulan']."' and year(a.tanggal_masuk)='".$_POST['tahun']."' order by a.tanggal_masuk, c.nama_barang ASC");
 
 ?>
 
@@ -102,6 +103,7 @@ $query = mysqli_query($koneksi, "select a.*,b.nama from barang_masuk a join peng
           <table width="100%" align="center" border="1" style="text-align: center">
             <tr>
               <th>No</th>
+              <th>Kode Barang</th>
               <th>Nama Barang</th>
               <th>Jumlah Barang</th>
               <th>User</th>
@@ -117,10 +119,11 @@ $query = mysqli_query($koneksi, "select a.*,b.nama from barang_masuk a join peng
               ?>
             <tr>
               <td><?=$n?></td>
+              <td style="text-align: left; padding-left: 5px;"><?=$row['kd_barang']?></td>
               <td style="text-align: left; padding-left: 5px;"><?=$row['nama_barang']?></td>
               <td ><?=$row['jumlah_masuk']?></td>
               <td><?=$row['nama']?></td>
-              <td><?=date("d M Y", strtotime($row['tanggal_masuk']))?></td>
+              <td><?=strftime("%d %B %Y", strtotime($row['tanggal_masuk']))?></td>
             </tr>
             <?php 
             }
@@ -139,7 +142,7 @@ $query = mysqli_query($koneksi, "select a.*,b.nama from barang_masuk a join peng
             <tr>
               <td width="50%" rowspan="2"></td>
               <td align="center" style="height: 75px; vertical-align: top;">
-                Purbalingga, <?=date("d M Y")?>
+                Purbalingga, <?= strftime("%d %B %Y", strtotime(date("Y-m-d")))?>
               </td>
             </tr>
             <tr>

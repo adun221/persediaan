@@ -49,10 +49,11 @@
 </style>
 
 <?php 
+setlocale(LC_ALL, 'id-ID', 'id_ID');
 
 include '../../controller/konek.php';
 // $query = mysqli_query($koneksi, "SELECT a.nama_barang, a.jumlah_masuk, b.jumlah_keluar, (a.jumlah_masuk-b.jumlah_keluar) AS stok FROM (SELECT id_masuk, nama_barang,SUM(jumlah_masuk) AS jumlah_masuk FROM barang_masuk GROUP BY nama_barang) a JOIN (SELECT id_masuk, SUM(jumlah_keluar) AS jumlah_keluar FROM barang_keluar GROUP BY id_masuk) b ON a.id_masuk=b.id_masuk order by a.nama_barang ASC");
-$query = mysqli_query($koneksi, "SELECT a.id_masuk,b.nama_barang,a.jumlah_tersedia as stok FROM barang_tersedia a JOIN barang_masuk b ON a.`id_masuk`=b.`id_masuk` WHERE a.jumlah_tersedia!='0'");
+$query = mysqli_query($koneksi, "SELECT b.kd_barang,b.nama_barang,a.jumlah_tersedia FROM barang_tersedia a JOIN nama_barang b ON a.kd_barang=b.id WHERE a.jumlah_tersedia!='0'");
 
 ?>
 
@@ -77,6 +78,7 @@ $query = mysqli_query($koneksi, "SELECT a.id_masuk,b.nama_barang,a.jumlah_tersed
           <table width="100%" align="center" border="1" style="text-align: center">
             <tr>
               <th>No</th>
+              <th>Kode Barang</th>
               <th>Nama Barang</th>
               <th>Jumlah Barang</th>
             </tr>
@@ -90,8 +92,9 @@ $query = mysqli_query($koneksi, "SELECT a.id_masuk,b.nama_barang,a.jumlah_tersed
               ?>
             <tr>
               <td><?=$n?></td>
+              <td style="text-align: left; padding-left: 5px;"><?=$row['kd_barang']?></td>
               <td style="text-align: left; padding-left: 5px;"><?=$row['nama_barang']?></td>
-              <td><?=$row['stok']?></td>
+              <td><?=$row['jumlah_tersedia']?></td>
             </tr>
             <?php 
             }
@@ -110,7 +113,7 @@ $query = mysqli_query($koneksi, "SELECT a.id_masuk,b.nama_barang,a.jumlah_tersed
             <tr>
               <td width="50%" rowspan="2"></td>
               <td align="center" style="height: 75px; vertical-align: top;">
-                Purbalingga, <?=date("d M Y")?>
+                Purbalingga, <?= strftime("%d %B %Y", strtotime(date("Y-m-d")))?>
               </td>
             </tr>
             <tr>
