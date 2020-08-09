@@ -16,19 +16,23 @@
                   <thead>
                     <tr>
                       <th style="width: 50px;">No</th>
+                      <th>Kode Barang</th>
                       <th>Nama Barang</th>
                       <th>Stok</th>
+                      <th>Tanggal</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
                       $n = "0";
-                       $query = mysqli_query($koneksi,"SELECT b.nama_barang,a.jumlah_tersedia FROM barang_tersedia a JOIN nama_barang b ON a.kd_barang=b.id WHERE a.jumlah_tersedia!='0' ");
+                       $query = mysqli_query($koneksi,"SELECT b.kd_barang,b.nama_barang,a.jumlah_tersedia, DATE(NOW()) AS tanggal FROM barang_tersedia a JOIN nama_barang b ON a.kd_barang=b.id WHERE a.jumlah_tersedia!='0' ");
                        while ($rs = mysqli_fetch_array($query)) { $n++; ?>
                         <tr>
                           <td><?=$n;?></td>
+                          <td><?=$rs['kd_barang'];?></td>
                           <td><?=$rs['nama_barang'];?></td>
                           <td><?=$rs['jumlah_tersedia'];?></td>
+                          <td><?=$rs['tanggal'];?></td>
                         </tr>
                        <?php }
                        ?>

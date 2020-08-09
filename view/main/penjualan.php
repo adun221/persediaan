@@ -311,7 +311,7 @@ if (isset($_GET['del'])=='') {
 
     });
 
-    function InvalidMsg(textbox) {
+  function InvalidMsg(textbox) {
     
     if (textbox.value == '') {
         textbox.setCustomValidity('Tolong Diisi Terlebih Dahulu');
@@ -323,6 +323,6 @@ if (isset($_GET['del'])=='') {
         textbox.setCustomValidity('');
     }
     return true;
-}
+  }
 
 </script>

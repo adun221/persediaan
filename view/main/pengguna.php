@@ -64,7 +64,7 @@ if (isset($_GET['del'])=='') {
                                                         <span>User Name</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" class="form-control" name="username" placeholder="Username" />
+                                                        <input type="text" class="form-control" name="username" placeholder="Username" required />
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -72,7 +72,7 @@ if (isset($_GET['del'])=='') {
                                                         <span>Password</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="password" class="form-control" name="password" placeholder="Password" />
+                                                        <input type="password" class="form-control" minlength="6"  name="password" oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);" placeholder="Password" required/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -80,7 +80,7 @@ if (isset($_GET['del'])=='') {
                                                         <span>Nama</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="text" class="form-control" name="nama" placeholder="Nama" />
+                                                        <input type="text" class="form-control" name="nama" placeholder="Nama" required />
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -88,7 +88,7 @@ if (isset($_GET['del'])=='') {
                                                         <span>Jabatan</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                      <select class="form-control" id="seljab" name="jabatan">
+                                                      <select class="form-control" id="seljab" name="jabatan" required>
                                                         <option value=""></option>
                                                         <option value="1">Pemilik</option>
                                                         <option value="2">Gudang</option>
@@ -174,7 +174,7 @@ if (isset($_GET['del'])=='') {
                                             </div>
                                             <div class="col-md-8">
                                                 <input type="hidden" id="id_pengguna" name="id_pengguna">
-                                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" />
+                                                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -182,7 +182,7 @@ if (isset($_GET['del'])=='') {
                                                 <span>Password</span>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+                                                <input type="password" class="form-control" id="password" minlength="6" name="password" oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);" placeholder="Password" required/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -190,7 +190,7 @@ if (isset($_GET['del'])=='') {
                                                 <span>Nama</span>
                                             </div>
                                             <div class="col-md-8">
-                                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" />
+                                                <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama" required/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -198,7 +198,7 @@ if (isset($_GET['del'])=='') {
                                                 <span>Jabatan</span>
                                             </div>
                                             <div class="col-md-8">
-                                              <select class="form-control" id="eseljab" id="jabatan" name="jabatan">
+                                              <select class="form-control" id="eseljab" id="jabatan" name="jabatan" required>
                                                 <option value=""></option>
                                                 <option value="1">Pemilik</option>
                                                 <option value="2">Gudang</option>
@@ -272,5 +272,19 @@ if (isset($_GET['del'])=='') {
             })
         });
     });
+
+    function InvalidMsg(textbox) {
+    
+    if (textbox.value == '') {
+        textbox.setCustomValidity('Tolong Diisi Terlebih Dahulu');
+    }
+    else if(textbox.validity.rangeOverflow){
+        textbox.setCustomValidity('Maaf Stok Tidak Mencukupi');
+    }
+    else {
+        textbox.setCustomValidity('');
+    }
+    return true;
+  }
 
 </script>
