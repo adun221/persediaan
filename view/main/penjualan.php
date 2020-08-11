@@ -67,7 +67,7 @@ if (isset($_GET['del'])=='') {
                                                         <select class="form-control" id="selmasuk" name="kd_barang" required>
                                                           <option value=""></option>
                                                           <?php  
-                                                            $nabar = mysqli_query($koneksi,"SELECT * from nama_barang order by nama_barang asc");
+                                                            $nabar = mysqli_query($koneksi,"SELECT a.* FROM nama_barang a JOIN barang_tersedia b ON a.id=b.kd_barang WHERE b.`jumlah_tersedia`!='0' ORDER BY nama_barang ASC");
                                                             while ($rsnabar = mysqli_fetch_array($nabar)) { ?>
                                                           <option data-value="<?=$rsnabar['id'];?>" value="<?=$rsnabar['id'];?>"><?=$rsnabar['nama_barang'];?></option>
                                                            <?php } ?>
