@@ -7,7 +7,7 @@
 
 ?>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="in" xml:lang="in">
 <?php 
 	$baseurl = "http://localhost/persediaan/";
 	$urlcontroller = "http://localhost/persediaan/controller";

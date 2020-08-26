@@ -72,7 +72,8 @@ if (isset($_GET['del'])=='') {
                                                         <span>Password</span>
                                                     </div>
                                                     <div class="col-md-8">
-                                                        <input type="password" class="form-control" minlength="6"  name="password" oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);" placeholder="Password" required/>
+                                                        <input type="password" class="form-control" id="spassword"  name="password" oninvalid="setCustomValidity('Password Min 6 karakter');" oninput="InvalidMsg(this);" placeholder="Password" required/>
+                                                        <span id="alertpasword" style="color: red"></span>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
@@ -102,7 +103,8 @@ if (isset($_GET['del'])=='') {
                                                   <div class="col-md-4">
                                                   </div>
                                                   <div class="col-md-8">
-                                                    <button type="submit" class="btn btn-primary mr-1 mb-1">Simpan</button>
+                                                    <button type="submit" class="btn btn-primary mr-1 mb-1" id="simpana">Simpan</button>
+                                                    <input class="btn btn-danger mr-1 mb-1" id="simpanb" value="Simpan" style="width: 80px; display: none;" disabled>
                                                   </div>
                                               </div>
                                             </div>
@@ -183,6 +185,7 @@ if (isset($_GET['del'])=='') {
                                             </div>
                                             <div class="col-md-8">
                                                 <input type="password" class="form-control" id="password" minlength="6" name="password" oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);" placeholder="Password" required/>
+                                                <span id="ealertpasword" style="color: red"></span>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -212,7 +215,8 @@ if (isset($_GET['del'])=='') {
                                         <div class="col-md-4">
                                         </div>
                                         <div class="col-md-8">
-                                          <button type="submit" class="btn btn-primary mr-1 mb-1">Simpan</button>
+                                          <button type="submit" class="btn btn-primary mr-1 mb-1" id="esimpana">Simpan</button>
+                                          <input class="btn btn-danger mr-1 mb-1" id="esimpanb" value="Simpan" style="width: 80px; display: none;" disabled>
                                           <button type="button" class="btn btn-danger mr-1 mb-1" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
@@ -233,6 +237,44 @@ if (isset($_GET['del'])=='') {
 
 <script type="text/javascript">
     $(document).ready(function(){ 
+
+        $("#spassword").keyup(function(){
+          var a = $("#spassword").val();
+          if (a.length==0) {
+            $("#alertpasword").html("");
+            $("#simpana").hide();
+            $("#simpanb").show();
+          } else if(a.length<6) {
+            var kurang = 6-a.length;
+            $("#alertpasword").html("Kurang "+kurang+" Karakter lagi" );
+            $("#simpana").hide();
+            $("#simpanb").show();
+          } else if(a.length>=6) {
+            $("#alertpasword").html("");
+            $("#simpanb").hide();
+            $("#simpana").show();
+
+          }
+        });
+
+        $("#password").keyup(function(){
+          var a = $("#password").val();
+          if (a.length==0) {
+            $("#ealertpasword").html("");
+            $("#esimpana").hide();
+            $("#esimpanb").show();
+          } else if(a.length<6) {
+            var kurang = 6-a.length;
+            $("#ealertpasword").html("Kurang "+kurang+" Karakter lagi" );
+            $("#esimpana").hide();
+            $("#esimpanb").show();
+          } else if(a.length>=6) {
+            $("#ealertpasword").html("");
+            $("#esimpanb").hide();
+            $("#esimpana").show();
+
+          }
+        });
 
         $('#seljab').select2({
             placeholder: "Pilih Jabatan"
@@ -278,7 +320,9 @@ if (isset($_GET['del'])=='') {
     if (textbox.value == '') {
         textbox.setCustomValidity('Tolong Diisi Terlebih Dahulu');
     }
-    else if(textbox.validity.rangeOverflow){
+    else if(textbox.validity.customError){
+        textbox.setCustomValidity('');
+    }else if(textbox.validity.rangeOverflow){
         textbox.setCustomValidity('Maaf Stok Tidak Mencukupi');
     }
     else {
